@@ -50,7 +50,8 @@ class App extends PureComponent {
             {id: "3", name: 'Mary', age: 25}
         ],
         otherState: "Some value",
-        showPersons: false
+        showPersons: false,
+        toggleClicked: 0
     }
 
 
@@ -86,7 +87,15 @@ class App extends PureComponent {
 
     togglePersonsHandler = () => {
         const doesShow = this.state.showPersons;
-        this.setState({showPersons: !doesShow});
+        this.setState((prevState, props) => {
+            return {
+                showPersons: !doesShow,
+                toggleClicked: prevState.toggleClicked + 1
+            }
+
+
+        });
+
 
     }
 
@@ -107,7 +116,10 @@ class App extends PureComponent {
 
         return (
             <Aux>
-                <button onClick={() => {this.setState({showPersons: true})}}>Show Persons</button>
+                <button onClick={() => {
+                    this.setState({showPersons: true})
+                }}>Show Persons
+                </button>
                 <Cockpit appTitle={this.props.title}
                          showPersons={this.state.showPersons}
                          persons={this.state.persons}
